@@ -16,7 +16,7 @@ Always update your Xbox devices to the latest firmware version!
 
 ## Features
 
-- [x] Input and force feedback (rumble)
+- [x] Input, rumble and force feedback effects
 - [x] Battery reporting (`UPower` integration)
 - [x] LED control (using `/sys/class/leds`)
 - [x] Audio capture/playback (through `ALSA`)
@@ -34,7 +34,7 @@ Always update your Xbox devices to the latest firmware version!
     - [x] Xbox One Stereo Headset (adapter or jack)
     - [ ] Xbox Wireless Headset
     - [ ] Third party wireless headsets (SteelSeries, Razer, etc.)
-- [ ] Third party racing wheels (Thrustmaster, Logitech, etc.)
+- [x] Third party racing wheels (Thrustmaster, Logitech, etc.)
 - [x] Xbox One Chatpad
 - [x] Xbox Adaptive Controller
 
