@@ -97,7 +97,6 @@ struct gip_pkt_announce {
 
 struct gip_pkt_status {
 	u8 status;
-	u8 unknown[3];
 } __packed;
 
 struct gip_pkt_identify {
