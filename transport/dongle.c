@@ -895,14 +895,12 @@ static int xone_dongle_probe(struct usb_interface *intf,
 	init_waitqueue_head(&dongle->disconnect_wait);
 
 	err = xone_dongle_init(dongle);
-	if (err)
-		goto err_destroy_dongle;
+	if (err) {
+		xone_dongle_destroy(dongle);
+		return err;
+	}
 
 	usb_set_intfdata(intf, dongle);
-
-	err = device_add_groups(&intf->dev, xone_dongle_groups);
-	if (err)
-		goto err_destroy_dongle;
 
 	/* enable USB remote wakeup and autosuspend */
 	intf->needs_remote_wakeup = true;
@@ -912,19 +910,12 @@ static int xone_dongle_probe(struct usb_interface *intf,
 	usb_enable_autosuspend(dongle->mt.udev);
 
 	return 0;
-
-err_destroy_dongle:
-	xone_dongle_destroy(dongle);
-
-	return err;
 }
 
 static void xone_dongle_disconnect(struct usb_interface *intf)
 {
 	struct xone_dongle *dongle = usb_get_intfdata(intf);
 	int err;
-
-	device_remove_groups(&intf->dev, xone_dongle_groups);
 
 	/* can fail during USB device removal */
 	err = xone_dongle_power_off_clients(dongle);
@@ -998,6 +989,7 @@ static struct usb_driver xone_dongle_driver = {
 	.suspend = xone_dongle_suspend,
 	.resume = xone_dongle_resume,
 	.id_table = xone_dongle_id_table,
+	.dev_groups = xone_dongle_groups,
 	.drvwrap.driver.shutdown = xone_dongle_shutdown,
 	.supports_autosuspend = true,
 	.disable_hub_initiated_lpm = true,
