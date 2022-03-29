@@ -39,7 +39,6 @@ struct gip_guitar_pkt_input {
 struct gip_guitar {
 	struct gip_client *client;
 	struct gip_battery battery;
-	struct gip_led led;
 	struct gip_input input;
 };
 
@@ -156,10 +155,6 @@ static int gip_guitar_probe(struct gip_client *client)
 		return err;
 
 	err = gip_init_battery(&guitar->battery, client, GIP_GR_NAME);
-	if (err)
-		return err;
-
-	err = gip_init_led(&guitar->led, client);
 	if (err)
 		return err;
 
